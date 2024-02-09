@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Printer Pro</title>
+    <link rel = "stylesheet" href = "style.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+</head>
+<body>
+    <h1 class = "myclass"> Printer Pro </h1>
+    <h2 class = "myclass"> We Automate Printing. </h2>
+    <div class="move-right">
+    <p> We aim to help printing businesses by eliminating the need for a shopkeeper using a simple <b>raspberry pi</b> system for automating printing with a customer friendly product.</p><br><br>
+
+    <form id="printOrder">
+        <form id="myForm" action="http://localhost:7400/printer-website" method="post" enctype="multipart/form-data">
+            <input type="file" name="inpFile" id="inpFile" accept="*.png"><br>
+            <button type="submit">Upload File</button>
+        </form>
+        Enter the no. of copies
+        <br>
+        <input id = "duplicates" placeholder="enter a valid number">
+        <br>
+        Enter the range of pages
+        <br>
+        <input id = "low_range" placeholder="lower range">
+        <input id="upper_range" placeholder="upper range">
+        <br>
+        B&W or color print out
+        
+        <label for="color">Choose the color option</label>
+        <select name="color" id="color" required>
+            <option value="bw">B&W</option>
+            <option value="colored">Colored</option>
+        </select>
+        <br><br>
+        <div class="calcButton">
+        <button type="button" onclick="calculateAmount()">Calculate Bill</button>
+        </div>
+        <div id="resultContainer"></div>
+    </form>
+    </div>
+    <script src="/Users/vervypotato/elec club/basic/project/input.js"></script>
+    <script type="module" src="/Users/vervypotato/elec club/basic/project/server.js"></script>
+</body>
+</html> 
