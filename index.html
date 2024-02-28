@@ -6,7 +6,7 @@
     <title>Printer Pro</title>
     <link rel = "stylesheet" href = "style.css">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+    <script src="/Users/vervypotato/elec club/basic/project/checkout.js"></script>
 
 </head>
 <body>
@@ -38,12 +38,14 @@
         </select>
         <br><br>
         <div class="calcButton">
-        <button type="button" onclick="calculateAmount()">Calculate Bill</button>
+        <button type="button" onclick="calculateAmount();generateLink();">Calculate Bill</button>
         </div>
         <div id="resultContainer"></div>
+        
     </form>
     </div>
-    <script src = "https://github.com/printerproiitm/test2/blob/3cab639039533893b7da44131b9c697005ee066b/input.js"></script>
-    <script type="module" src="https://github.com/printerproiitm/test2/blob/cda6319a24fd74d3873a41f8a25f401be7418457/server.js"></script>
+    <script src="/Users/vervypotato/elec club/basic/project/input.js"></script>
+    <script src="/Users/vervypotato/elec club/basic/project/server.js"></script>
+    <script src="/Users/vervypotato/elec club/basic/project/razorpay.js"></script>
 </body>
 </html> 
