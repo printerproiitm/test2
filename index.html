@@ -44,8 +44,130 @@
         
     </form>
     </div>
-    <script src="/Users/vervypotato/elec club/basic/project/input.js"></script>
-    <script src="/Users/vervypotato/elec club/basic/project/server.js"></script>
-    <script src="/Users/vervypotato/elec club/basic/project/razorpay.js"></script>
+    <script>
+        function calculateAmount(){
+            console.log("func working");
+            const bwpp = 0.5;
+            const cpp = 1;
+            var dups = document.getElementById("duplicates").value;
+            var low = document.getElementById("low_range").value;
+            var high = document.getElementById("upper_range").value;
+            var colorOption = document.getElementById("color").value;
+        
+            if (colorOption === "colored"){
+                var totalAmount = (high - low + 1)*cpp;
+            }
+            else if (colorOption === "bw"){
+                var totalAmount = (high - low + 1)*bwpp;
+            }
+        
+            var resultContainer = document.getElementById('resultContainer');
+            var amount = '<p><u>Total Amount</u>: ₹' + '<b>' + totalAmount + '</b>' + '</p>';
+            resultContainer.innerHTML = amount;
+            console.log(typeof(totalAmount));
+        }
+        function generateLink() {
+            // Create a new button element
+            var newButton = document.createElement("button");
+            newButton.innerHTML = "Generate Payment Link";
+        
+            // Set attributes for the new button if needed
+            newButton.setAttribute("id", "new-button");
+            newButton.setAttribute("onclick", "generatePaymentLink()");
+        
+            // Append the new button to the document body
+            document.body.appendChild(newButton);
+        }
+    </script>
+    <script>
+        import { createWriteStream } from 'fs';
+        import path, { extname, join } from 'path';
+        import { fileURLToPath } from 'url';
+        const ipAddress = '10.42.66.163'
+        const port =  7400
+        
+        
+        import express from "express";
+        import cors from "cors";
+        
+        import fileupload from "express-fileupload";
+        const app = express();
+        app.use(fileupload())
+        app.use(cors({
+            "origin" : "*"
+        }))
+        
+        
+        
+        app.post("/printer-website", (req, res) => {
+            console.log("here")
+            let files = req.files;
+            if (!files) res.send({"message" : "No files sent"}) 
+            let file = files.inpFile;
+            // const fileExtName = extname(file.name);
+            // console.log(fileExtName)
+        const fileName =
+          Date.now() + '-' + Math.round(Math.random() * 1e9) + ".pdf";
+          const __filename = fileURLToPath(import.meta.url);
+          const __dirname = path.dirname(__filename);
+        
+        const filePath = join(__dirname,'uploads', fileName);
+        console.log(file)
+        const writeStream = createWriteStream(filePath, {
+        
+        });
+        
+          writeStream.on('finish', async () => {
+            // any thing you want to perform after writing the file
+            res.send("file uploaded!")
+          });
+          writeStream.on('error', (error) => {
+            reject(error);
+          });
+          writeStream.write(file.data);
+          writeStream.end()});
+          
+        
+        app.get("/", (req, res) => {
+            res.send("hello")
+        })
+        
+        app.listen(port, () => {
+            console.log("server is listening on port " + port);
+          });
+    </script>
+    <script>
+        function generatePaymentLink() {
+            var totalAmount = document.getElementById("resultContainer");
+            if (totalAmount){
+                var options = {
+                    "key": "rzp_live_vOhX6O54BcIx6X",
+                    "amount": 700,
+                    "currency": "INR",
+                    "name": "Printer Shop IITM",
+                    "description": "payment for printouts",
+                    "handler": function (response){
+                        console.log("payment successful:", response);
+                    },
+                    "prefill": {
+                        "email": "customer@example.com" // Pre-fill customer email
+                    },
+                    "notes": {
+                        "address": "your address"
+                    },
+                    "theme": {
+                        "color": "F37254"
+                    }
+        
+                };
+        
+                var rzp = new Razorpay(options);
+                rzp.open();     
+            }
+            else{
+                console.log("An Error occured, please try again");
+            }
+        }
+    </script>
 </body>
 </html> 
